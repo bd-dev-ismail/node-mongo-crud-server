@@ -20,12 +20,14 @@ const client = new MongoClient(uri, {
 async function run() {
     try{
         const userCollection = client.db('NodeMongoCrud').collection('users');
-        const user = {
-            name: 'PreTest Test',
-            email: 'pretest@gmail.com'
-        }
-        const result = await userCollection.insertOne(user);
-        console.log(result);
+        
+        app.post("/users", async(req, res) => {
+          const user = req.body;
+          console.log(user);
+          const result = await userCollection.insertOne(user);
+          console.log(result);
+          res.send(result)
+        });
     }
     finally{
         //  await client.close();
